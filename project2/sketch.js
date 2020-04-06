@@ -21,7 +21,7 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-  default_size = windowWidth/100;
+  default_size = windowWidth/500;
   colorMode(RGB);
   
   amp = new p5.Amplitude(0.9);
