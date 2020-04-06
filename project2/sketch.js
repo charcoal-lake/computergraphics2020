@@ -56,6 +56,7 @@ function setup() {
   colorSet.push([color(0, 0, 0), color(0, 0, 80), color(255, 0, 0), color(0, 0, 255), color(100, 0, 100)]);
   colorSet.push([color(180), color(0), color(0), color(0), color(0)]);
 
+  noCursor();
 }
 
 function draw() {
