@@ -16,7 +16,7 @@ let set =0;
 
 function preload(){
   teapot = loadModel("teapot.obj");
-  sound = loadSound("tribal-music.mp3");
+  sound = loadSound("music.mp3");
 }
 
 function setup() {
