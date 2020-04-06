@@ -24,7 +24,7 @@ function setup() {
   default_size = windowWidth/300;
   colorMode(RGB);
   
-  amp = new p5.Amplitude(0.9);
+  amp = new p5.Amplitude();
   sound.play();
   
   let i;
@@ -40,9 +40,9 @@ function setup() {
   }
 
   // [background, ambient, dir1, dir2, dir3]
+  colorSet.push([color(33, 134, 140), color(20), color(138, 20, 25), color(255, 0, 0), color(190, 125, 125)]);
   colorSet.push([color(0, 0, 0), color(0, 0, 80), color(255, 0, 0), color(0, 0, 255), color(100, 0, 100)]);
-  colorSet.push( [color(2, 88, 0), color(20), color(100, 100, 0), color(255, 255, 0), color(140, 0, 0)]);
-  colorSet.push([color(255, 255, 0), color(0), color(0), color(0), color(0)]);
+  colorSet.push([color(180), color(0), color(0), color(0), color(0)]);
 
 }
 
