@@ -25,8 +25,8 @@ class Teapot{
   }
   
   rotate(){
-    this.rx = map(mouseY, 0, windowWidth, radians(-90), radians(90));
-    this.ry = map(mouseX, 0, windowHeight, radians(-90), radians(90));
+    this.rx = map(mouseY, 0, windowWidth, radians(-50), radians(50));
+    this.ry = map(mouseX, 0, windowHeight, radians(-50), radians(50));
     rotateX(this.rx);
     rotateY(this.ry);
     rotateZ(mouseY*0.01+(this.cnt/this.max));
