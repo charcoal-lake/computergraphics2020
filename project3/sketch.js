@@ -1,3 +1,9 @@
+/*
+Computer Graphics, 2020
+20161201 Choi Yerin
+3rd Project Terraformer
+*/
+
 // world grid array
 let world = new Array(10);
 
@@ -51,11 +57,8 @@ class land {
 }
 
 
-/*
-=======================================================
-                        SETUP
-=======================================================
-*/
+
+
 function setup() {
   colorMode(HSB, 100);
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -150,6 +153,7 @@ function set_stroke(){
 
 function set_world(x){
   if(x == -1){ // randomize
+    // use noise map to randomize landscapes:
     let offset_x = random(0, 50);
     let offset_y = random(0, 50);
     for(let i=0; i<grid_num; i++){
@@ -159,7 +163,7 @@ function set_world(x){
       }
     }
   }
-  else if(x == 1){
+  else if(x == 1){ // initialize
     for(let i=0; i<grid_num; i++){
       for(let j=0; j<grid_num; j++){
         world[i][j].h = 150;
@@ -170,5 +174,6 @@ function set_world(x){
 }
 
 document.oncontextmenu = function() {
+  // disable right click menu
     return false;
 }
