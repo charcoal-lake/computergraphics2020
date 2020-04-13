@@ -10,10 +10,15 @@ canvas {
 }
 
 .ui {
-  height : 15%;
   background-color:white;
   width : 100%;
-  position : fixed;
+  display: block;
+}
+
+.main{
+  width:auto;
+  height:100%;
+  display:block;
 }
 
 #top {
@@ -31,6 +36,7 @@ canvas {
 }
 
 #left{
+  padding : 10px;
   margin-left:0;
   width:10%;
   height : 100%;
@@ -40,6 +46,7 @@ canvas {
 #txt{
   font-size : 1vw;
 }
+
 
 h2{ 
   display : block;
