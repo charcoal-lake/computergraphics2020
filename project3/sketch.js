@@ -4,13 +4,14 @@ Computer Graphics, 2020
 3rd Project Terraformer
 */
 
-// world grid array
-let world = new Array(10);
 
 // initial settings for each grid
 let box_size = 10;
 let grid_num = 50;
 let max_height = 250;
+
+// world grid array
+let world = new Array(grid_num);
 
 // sliders
 let x_slider;
@@ -65,7 +66,7 @@ function setup() {
 
   // 1. initialize 250 grid (grid_num*grid_num)
   for (let i = 0; i < grid_num; i++) {
-    world[i] = new Array(10);
+    world[i] = new Array(grid_num);
     for (let j = 0; j < grid_num; j++) {
       // i is row j is column
       // i = box_size*i - height/2;
