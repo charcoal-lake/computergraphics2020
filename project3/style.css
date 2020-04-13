@@ -30,6 +30,13 @@ canvas {
   line-height : 100px;
 }
 
+#left{
+  margin-left:0;
+  width:10%;
+  height : 100%;
+}
+
+
 #txt{
   font-size : 1vw;
 }
