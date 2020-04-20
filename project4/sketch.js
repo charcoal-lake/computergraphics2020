@@ -1,6 +1,5 @@
 let distance, thetaX, thetaY, rot=0;
 let cell=100, cnt = 10;
-let camMode=1;
 let objMode=1;
 let md;
 let offsetX = 100;
@@ -8,7 +7,7 @@ let offsetZ = 131;
 
 let slider_sp;
 let slider_cr;
-let auto_light;
+let lightMode = true;
 let dir_x, dir_y;
 
 function preload(){
@@ -25,11 +24,19 @@ function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   distance = 700;
   theta = 0;
+  colorMode(HSB, 100);
 
   slider_sp = createSlider(1, 20, 1);
   slider_sp.position(20, 10);
   auto_light = createButton('auto light');
   auto_light.position(width/2, 10);
+  auto_light.mousePressed(function(){
+    lightMode = !lightMode;
+  });
+  slider_cr = createSlider(0, 100, 0);
+  slider_cr.position(20, 30);
+  
+  
   
   noStroke();
 }
@@ -43,8 +50,8 @@ function draw() {
   thetaY = map(mouseY, 0, height, -90, 90);
   camera(distance*sin(thetaX), -height+mouseY, distance*cos(thetaX), 0, 0, 0, 0, 1, 0);
   
-  let dirX = (mouseX / width - 0.5) * 2;
-  let dirY = (mouseY / height - 0.5) * 2;
+  dir_x = (mouseX / width - 0.5) * 2;
+  dir_y = (mouseY / height - 0.5) * 2;
   
   push();
   rotateX(PI/2);
@@ -79,8 +86,11 @@ function draw() {
   }
   
   translate(0,0, -cell*cnt/2);
-  ambientLight(100);
-  directionalLight(250, 250, 250, -dirX, -dirY, -1); 
+  ambientLight(50);
+  if(lightMode)
+    directionalLight(360, 0, 50, -dir_x, -dir_y, -1); 
+  else
+    directionalLight(slider_cr.value(), 40, 100, cos(rot), sin(rot), -1);
 
   specularMaterial(100);
   shininess(slider_sp.value());
@@ -96,6 +106,8 @@ function draw() {
       }
     }
   }
+  
+  rot -= 0.01;
 }
 
 function mouseWheel(event){
@@ -121,9 +133,5 @@ function keyPressed(){
     case '5' : objMode = 5; break;
     default : objMode = objMode;
   }
-  
-}
-
-function lightMode(){
   
 }
