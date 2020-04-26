@@ -1,7 +1,7 @@
 function setSliders() {
 
-  let posx = width/8-40;
-  let posy = 100;
+  let posx = width / 8 - 40;
+  let posy = height / 2;
 
   let view_lb = createSpan('view');
 
@@ -11,18 +11,18 @@ function setSliders() {
   let legl_lb = createSpan('left leg');
   let armr_lb = createSpan('right arm');
   let arml_lb = createSpan('left arm');
-  
+
   view_x = createSlider(-90, 0, 0);
   view_y = createSlider(-90, 90, -90);
   view_z = createSlider(0, 180, 45);
 
   waist_top_x = createSlider(-80, 45, 0);
   waist_top_y = createSlider(-30, 30, 0);
-  waist_top_z = createSlider(-30, 30, 0); 
+  waist_top_z = createSlider(-30, 30, 0);
 
   waist_btm_x = createSlider(0, 45, 0);
   waist_btm_y = createSlider(-20, 20, 0);
-  waist_btm_z = createSlider(-20, 20, 0); 
+  waist_btm_z = createSlider(-20, 20, 0);
 
   legr_ux = createSlider(-90, 90, 0);
   legr_uy = createSlider(0, 180, 0);
@@ -72,56 +72,35 @@ function setSliders() {
   slider_cnt = sliders.length;
 
   // view slider
-  view_lb.position(posx, posy); posy+=15;
-  view_x.position(posx, posy); posy+=15;
-  view_y.position(posx, posy); posy+=15;
-  view_z.position(posx, posy); posy+=15;
-  posy+= 15;
+  view_lb.position(posx, posy); posy += 15;
+  view_x.position(posx, posy); posy += 15;
+  view_y.position(posx, posy); posy += 15;
+  view_z.position(posx, posy); posy += 15;
+  posy += 15;
 
-  // waist top slider
-  waist_top_lb.position(posx, posy); posy+=15;
-  waist_top_x.position(posx, posy); posy+=15;
-  waist_top_y.position(posx, posy); posy+=15;
-  waist_top_z.position(posx, posy); posy+=15;
-  posy+=15;
-  
-  //waist bottom slider
-  waist_btm_lb.position(posx, posy); posy+=15;
-  waist_btm_x.position(posx, posy); posy+=15;
-  waist_btm_y.position(posx, posy); posy+=15;
-  waist_btm_z.position(posx, posy); posy+=15;
-  posy+=15;
+  // waist slider
+  waist_top_lb.position(posx, posy); waist_btm_lb.position(3 * posx, posy); posy += 15;
+  waist_top_x.position(posx, posy); waist_btm_x.position(3 * posx, posy); posy += 15;
+  waist_top_y.position(posx, posy); waist_btm_y.position(3 * posx, posy); posy += 15;
+  waist_top_z.position(posx, posy); waist_btm_z.position(3 * posx, posy); posy += 15;
+  posy += 15;
 
-  // arm right slider
-  armr_lb.position(posx, posy); posy+=15;
-  armr_ux.position(posx, posy); posy+=15;
-  armr_uy.position(posx, posy); posy+=15;
-  armr_uz.position(posx, posy); posy+=15;
-  armr_vx.position(posx, posy); posy+=15;
-  posy+=15;
- 
-  // arm left slider
-  arml_lb.position(posx, posy); posy+=15;
-  arml_ux.position(posx, posy); posy+=15;
-  arml_uy.position(posx, posy); posy+=15;
-  arml_uz.position(posx, posy); posy+=15;
-  arml_vx.position(posx, posy); posy+=15;
-  posy+=15;
+
+  // arm slider
+  armr_lb.position(posx, posy); arml_lb.position(3 * posx, posy); posy += 15;
+  armr_ux.position(posx, posy); arml_ux.position(3 * posx, posy); posy += 15;
+  armr_uy.position(posx, posy); arml_uy.position(3 * posx, posy); posy += 15;
+  armr_uz.position(posx, posy); arml_uz.position(3 * posx, posy); posy += 15;
+  armr_vx.position(posx, posy); arml_vx.position(3 * posx, posy); posy += 15;
+  posy += 15;
 
   // leg right slider
-  legr_lb.position(posx, posy); posy+=15;
-  legr_ux.position(posx, posy); posy+=15;
-  legr_uy.position(posx, posy); posy+=15;
-  legr_uz.position(posx, posy); posy+=15;
-  legr_vx.position(posx, posy); posy+=15;
-  posy+=15;
+  legr_lb.position(posx, posy); legl_lb.position(3*posx, posy); posy += 15;
+  legr_ux.position(posx, posy); legl_ux.position(3*posx, posy); posy += 15;
+  legr_uy.position(posx, posy); legl_uy.position(3*posx, posy); posy += 15;
+  legr_uz.position(posx, posy); legl_uz.position(3*posx, posy); posy += 15;
+  legr_vx.position(posx, posy); legl_vx.position(3*posx, posy); posy += 15;
+  posy += 15;
 
-  // leg left slider
-  legl_lb.position(posx, posy); posy+=15;
-  legl_ux.position(posx, posy); posy+=15;
-  legl_uy.position(posx, posy); posy+=15;
-  legl_uz.position(posx, posy); posy+=15;
-  legl_vx.position(posx, posy); posy+=15;
-  posy+=15;
 
 }

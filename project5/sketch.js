@@ -29,33 +29,28 @@ function preload(){
 
 function setup() {
 
-  let cnv = createCanvas(windowWidth * 3 / 4, windowHeight, WEBGL);
-  cnv.position(windowWidth / 4, 0);
+  let cnv = createCanvas(windowWidth * 2/3, windowHeight, WEBGL);
+  cnv.position(windowWidth / 3, 0);
 
+
+  // UI
   // sliders
   setSliders();
 
   // buttons
-  let savec = createButton('save');
-  savec.mousePressed(function () {
-    let file = createWriter('choreo.txt');
-    file.write(choreo);
-    file.close();
-  });
-  savec.position(60, 10);
 
   let push_act = createButton('push');
   push_act.mousePressed(function () {
     for (i = 0; i < slider_cnt; i++)
       choreo.push(sliders[i].value());
   });
-  push_act.position(10, 10);
+  push_act.position(80, height/2-100);
 
   let run = createButton('run');
   run.mousePressed(function () {
     run_flag = 1;
   });
-  run.position(100, 10);
+  run.position(125, height/2-100);
 
   let reset = createButton('reset');
   reset.mousePressed(function () {
@@ -65,7 +60,7 @@ function setup() {
     choreo = [];
   }
   );
-  reset.position(150, 10);
+  reset.position(160, height/2-100);
 
   // set default position
   for (i = 0; i < slider_cnt; i++)
@@ -78,7 +73,26 @@ function setup() {
     choreo = gymnastic;
     run_flag=1;
   });
-  preset.position(10, 30);
+  preset.position(80, height/2-70);
+
+  let savec = createButton('save');
+  savec.mousePressed(function () {
+    let file = createWriter('choreo.txt');
+    file.write(choreo);
+    file.close();
+  });
+  savec.position(140, height/2-70);
+
+  let title = createSpan('Robot Dance<br> Animator');
+  title.style('font-size', '30px');
+  title.style('font-weight', 'bold');
+  title.style('font-family', 'Roboto Mono');
+  title.position(30, 30);
+
+  let desc = createDiv('hello world');
+  desc.style('font-size', '10px');
+  desc.style('font-family', 'Roboto Mono');
+  desc.position(30, 130);
 
 
 }
