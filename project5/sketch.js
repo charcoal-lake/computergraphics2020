@@ -1,5 +1,5 @@
 let view_x, view_y, view_z;
-let music;
+let m1, m2, light_flag;
 
 //sliders
 let legr_ux, legr_uy, legr_uz, legr_vx,
@@ -24,7 +24,8 @@ let run_flag = 0;
 
 function preload(){
 
-  music = loadSound('music.mp3');
+  m1 = loadSound('gym.mp3');
+  m2 = loadSound('view.mp3');
 }
 
 function setup() {
@@ -38,7 +39,6 @@ function setup() {
   setSliders();
 
   // buttons
-
   let push_act = createButton('push');
   push_act.mousePressed(function () {
     for (i = 0; i < slider_cnt; i++)
@@ -54,7 +54,8 @@ function setup() {
 
   let reset = createButton('reset');
   reset.mousePressed(function () {
-    music.stop();
+    m1.stop();
+    m2.stop();
     for (let i = 0; i < slider_cnt; i++)
       sliders[i].value(0);
     choreo = [];
@@ -62,18 +63,35 @@ function setup() {
   );
   reset.position(160, height/2-100);
 
+  light_flag = true;
+  let light = createButton('light');
+  light.mousePressed(function(){
+    light_flag = !light_flag;
+  });
+  light.position(205, height/2-100);
+
   // set default position
   for (i = 0; i < slider_cnt; i++)
     choreo.push(0);
 
 
-  let preset = createButton('국민체조');
-  preset.mousePressed(function(){
-    music.play();
+  let preset_gym = createButton('국민체조');
+  preset_gym.mousePressed(function(){
+    m2.stop();
+    m1.play();
     choreo = gymnastic;
     run_flag=1;
   });
-  preset.position(80, height/2-70);
+  preset_gym.position(80, height/2-70);
+
+  let preset_sung = createButton('성시경');
+  preset_sung.mousePressed(function(){
+    m1.stop();
+    m2.play();
+    choreo = robot;
+    run_flag = 1;
+  });
+  preset_sung.position(135, height/2-70);
 
   let savec = createButton('save');
   savec.mousePressed(function () {
@@ -81,7 +99,7 @@ function setup() {
     file.write(choreo);
     file.close();
   });
-  savec.position(140, height/2-70);
+  savec.position(200, height/2-70);
 
   let title = createSpan('Robot Dance<br> Animator');
   title.style('font-size', '30px');
@@ -89,7 +107,7 @@ function setup() {
   title.style('font-family', 'Roboto Mono');
   title.position(30, 30);
 
-  let desc = createDiv('hello world');
+  let desc = createDiv('Press \'push\' to push the pose to the choreography,<br>Press \'run\' to run the choreo.<br>Press \'reset\' to initialize the pose, and delete all the choreo<br>Press \'save\'to download the choreo coordinates as text file.');
   desc.style('font-size', '10px');
   desc.style('font-family', 'Roboto Mono');
   desc.position(30, 130);
@@ -101,7 +119,7 @@ function setup() {
 function draw() {
 
 
-  background(100);
+  background(color('#BE7D7D'));
 
   translate(0, 0, 150);
   rotateX(radians(70 + view_x.value()));
@@ -109,6 +127,12 @@ function draw() {
   translate(0, 0, view_y.value());
 
   noStroke();
+
+
+  if(light_flag == true) {
+     ambientLight(100);
+    fill(color('#876876'));
+  }
   plane(1000);
   stroke(255, 0, 0);
   line(0, 0, 0, 300, 0, 0); // visualize x-rotation axis
@@ -117,6 +141,15 @@ function draw() {
   stroke(0, 0, 255);
   line(0, 0, 0, 0, 0, 300); // visualize z-rotation axis
 
+  if(light_flag == true){
+  fill(255);
+  noStroke();
+  ambientMaterial(255);
+  directionalLight(255, 255, 255, 1,1, -1);
+  spotLight(255, 0, 0, 250, 0, 500, 0, 0, -1, Math.PI / 2, 1);
+  spotLight(0, 0, 255, 0, 250, 500, 0, 0, -1, Math.PI / 2, 1);
+  spotLight(0, 250, 0, mouseX, mouseY, 100, 0, 0, -1, Math.PI / 16);
+  };
 
   if (run_flag == 0) {
 

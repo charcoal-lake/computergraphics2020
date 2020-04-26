@@ -36,12 +36,12 @@ function setSliders() {
 
   armr_ux = createSlider(-180, 180, 0);
   armr_uy = createSlider(-45, 180, 0);
-  armr_uz = createSlider(0, 180, 0);
+  armr_uz = createSlider(-90, 90, 0);
   armr_vx = createSlider(0, 180, 0);
 
   arml_ux = createSlider(-180, 180, 0);
   arml_uy = createSlider(-45, 180, 0);
-  arml_uz = createSlider(0, 180, 0);
+  arml_uz = createSlider(-90, 90, 0);
   arml_vx = createSlider(0, 180, 0);
 
 
