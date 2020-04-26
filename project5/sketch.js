@@ -1,4 +1,5 @@
 let view_x, view_y, view_z;
+let music;
 
 //sliders
 let legr_ux, legr_uy, legr_uz, legr_vx,
@@ -21,6 +22,10 @@ let frmcnt = 0;
 let frmrate = 30;
 let run_flag = 0;
 
+function preload(){
+
+  music = loadSound('music.mp3');
+}
 
 function setup() {
 
@@ -54,6 +59,7 @@ function setup() {
 
   let reset = createButton('reset');
   reset.mousePressed(function () {
+    music.stop();
     for (let i = 0; i < slider_cnt; i++)
       sliders[i].value(0);
     choreo = [];
@@ -68,6 +74,7 @@ function setup() {
 
   let preset = createButton('국민체조');
   preset.mousePressed(function(){
+    music.play();
     choreo = gymnastic;
     run_flag=1;
   });
