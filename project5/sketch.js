@@ -75,23 +75,23 @@ function setup() {
     choreo.push(0);
 
 
-  let preset_gym = createButton('국민체조');
-  preset_gym.mousePressed(function(){
+  let preset2 = createButton('국민체조');
+  preset2.mousePressed(function(){
     m2.stop();
     m1.play();
     choreo = gymnastic;
     run_flag=1;
   });
-  preset_gym.position(80, height/2-70);
+  preset2.position(80, height/2-70);
 
-  let preset_sung = createButton('성시경');
-  preset_sung.mousePressed(function(){
+  let preset1 = createButton('성시경');
+  preset1.mousePressed(function(){
     m1.stop();
     m2.play();
     choreo = robot;
     run_flag = 1;
   });
-  preset_sung.position(135, height/2-70);
+  preset1.position(135, height/2-70);
 
   let savec = createButton('save');
   savec.mousePressed(function () {
