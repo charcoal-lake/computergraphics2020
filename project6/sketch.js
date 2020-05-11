@@ -12,7 +12,7 @@ let rot_x=0, rot_z=0;
 let conc = 1;
 let music = [];
 let bgm, mode = 1;
-let fft, peak, beat_off=2;
+let fft, peak, beat=2;
 
 // UI
 let decs;
@@ -82,10 +82,10 @@ function draw(){
 
  // dir_offset = map(mouseX, 0, width, 0, 20);
  if (peak.isDetected){
-   beat_off = 5;
+   beat = 5;
  }
  else {
-   beat_off *= 0.8;
+   beat *= 0.8;
  }
   dir_offset = map(amp.getLevel(), 0.0, 1.0, -2, 15);
   conc = map(mouseY, 0, height, 1, 5);
@@ -110,12 +110,12 @@ function draw(){
       angle = map(mouseX, 0, width, PI/16, PI/8);
     }
 
-    lights_dir[i].x += (dir_offset+beat_off)*cos(2*PI*i/light_cnt);
-    lights_dir[i].y += (dir_offset+beat_off)*sin(2*PI*i/light_cnt);
+    lights_dir[i].x += (dir_offset+beat)*cos(2*PI*i/light_cnt);
+    lights_dir[i].y += (dir_offset+beat)*sin(2*PI*i/light_cnt);
  
     spotLight(colour, lights_pos[i], lights_dir[i], angle, conc);
-    lights_dir[i].x -= (dir_offset+beat_off)*cos(2*PI*i/light_cnt);
-    lights_dir[i].y -= (dir_offset+beat_off)*sin(2*PI*i/light_cnt);
+    lights_dir[i].x -= (dir_offset+beat)*cos(2*PI*i/light_cnt);
+    lights_dir[i].y -= (dir_offset+beat)*sin(2*PI*i/light_cnt);
 
   }
 
