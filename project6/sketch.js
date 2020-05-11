@@ -12,19 +12,37 @@ let rot_x=0, rot_z=0;
 let conc = 1;
 let music = [];
 let bgm, mode = 1;
+let fft, peak, beat_off=2;
+
+// UI
+let decs;
+let title;
 
 function preload(){
   bg = loadImage('./bg.jpg');
 
-  music[1] = loadSound('./assets/1.mp3');
-  music[2] = loadSound('./assets/2.mp3');
+  for(let i=1; i<=5; i++)
+    music[i] = loadSound('./assets/'+i+'.mp3');
 
   md = loadModel('./tower.obj');
 }
 
 function setup(){
   cnv = createCanvas(windowHeight-100, windowHeight-100, WEBGL);
-  cnv.position(windowWidth/2-cnv.width/2, windowHeight/2-cnv.height/2);
+  cnv.position(2*windowWidth/3-cnv.width/2, windowHeight/2-cnv.height/2);
+
+  decs = createDiv('1. mouseX controls angle of spot light. <br> 2. mouseY controls concentration and diameter(how far<br>spot light is aparted from center) of the spotlight. <br> 3. You can scroll up or down to rotate the view. <br> 4. Press number key 1~5 to change music. <br> 5. Click the screen to play or pause the music.');
+  decs.style('font-size', '13px');
+  decs.style('font-family', 'Roboto Mono');
+  decs.position(100, height-150);
+
+  title = createSpan('City Lights');
+  title.style('font-size', '30px');
+  title.style('font-weight', 'bold');
+  title.style('font-family', 'Roboto Mono');
+  title.position(100, 100);
+  
+
   lights_dir = new p5.Vector(-1, 0, -1);
   def_color = color(255, 0, 0);
   lights_pos[0] = new p5.Vector(0, 0, 50);
@@ -35,7 +53,10 @@ function setup(){
     lights_dir[i] = new p5.Vector(-(cos(2*PI*i/light_cnt)), -(sin(2*PI*i/light_cnt)), -1);
   }
 
-  amp = new p5.Amplitude(0.3);
+  amp = new p5.Amplitude(0.6);
+  fft = new p5.FFT();
+  peak = new p5.PeakDetect();
+
   colour = color('red');
   angle = PI/8;
 }
@@ -44,16 +65,28 @@ function draw(){
   background(0);
   randomSeed(0);
 
+  fft.analyze();
+  peak.update(fft);
+
   bgm = music[mode];
   lights();
   camera(0, rot_x, 400, 0, 0, 0, 0, 1, 0);
 
   if(bgm.isPlaying()){
-    rot_z += 0.01;
+    rot_z += mode/500;
+  }
+  else {
+    rot_z -= 0.003;
   }
   rotateZ(rot_z);
 
  // dir_offset = map(mouseX, 0, width, 0, 20);
+ if (peak.isDetected){
+   beat_off = 5;
+ }
+ else {
+   beat_off *= 0.8;
+ }
   dir_offset = map(amp.getLevel(), 0.0, 1.0, -2, 15);
   conc = map(mouseY, 0, height, 1, 5);
   dist = map(mouseY, 0, height, -250, 250);
@@ -77,12 +110,12 @@ function draw(){
       angle = map(mouseX, 0, width, PI/16, PI/8);
     }
 
-    lights_dir[i].x += dir_offset*cos(2*PI*i/light_cnt);
-    lights_dir[i].y += dir_offset*sin(2*PI*i/light_cnt);
+    lights_dir[i].x += (dir_offset+beat_off)*cos(2*PI*i/light_cnt);
+    lights_dir[i].y += (dir_offset+beat_off)*sin(2*PI*i/light_cnt);
  
     spotLight(colour, lights_pos[i], lights_dir[i], angle, conc);
-    lights_dir[i].x -= dir_offset*cos(2*PI*i/light_cnt);
-    lights_dir[i].y -= dir_offset*sin(2*PI*i/light_cnt);
+    lights_dir[i].x -= (dir_offset+beat_off)*cos(2*PI*i/light_cnt);
+    lights_dir[i].y -= (dir_offset+beat_off)*sin(2*PI*i/light_cnt);
 
   }
 
@@ -138,4 +171,17 @@ function keyPressed(){
     bgm.stop();
     mode = 2;
   }
+  else if(key == '3'){
+    bgm.stop();
+    mode = 3;
+  }
+  else if(key == '4'){
+    bgm.stop();
+    mode = 4;
+  }
+  else if(key == '5'){
+    bgm.stop();
+    mode = 5;
+  }
+
 }
