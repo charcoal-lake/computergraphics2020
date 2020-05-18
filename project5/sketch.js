@@ -38,7 +38,7 @@ function setup() {
   // sliders
   setSliders();
 
-  // buttons
+  // START setting buttons
   let push_act = createButton('push');
   push_act.mousePressed(function () {
     for (i = 0; i < slider_cnt; i++)
@@ -101,6 +101,9 @@ function setup() {
   });
   savec.position(200, height/2-70);
 
+  // END of button
+
+  // TITLE and DESCRIPTIONS
   let title = createSpan('Robot Dance<br> Animator');
   title.style('font-size', '30px');
   title.style('font-weight', 'bold');

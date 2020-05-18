@@ -4,7 +4,6 @@ const light_cnt = 8;  // number of lights
 let dist = 250; // default
 let lights_dir = [];
 let lights_pos = [];
-let lights_color = [];
 
 let colour, angle;
 let dir_offset;
@@ -28,6 +27,8 @@ function preload(){
 }
 
 function setup(){
+
+  // interface
   cnv = createCanvas(windowHeight-100, windowHeight-100, WEBGL);
   cnv.position(2*windowWidth/3-cnv.width/2, windowHeight/2-cnv.height/2);
 
@@ -41,7 +42,6 @@ function setup(){
   title.style('font-weight', 'bold');
   title.style('font-family', 'Roboto Mono');
   title.position(100, 100);
-  
 
   lights_dir = new p5.Vector(-1, 0, -1);
   def_color = color(255, 0, 0);
