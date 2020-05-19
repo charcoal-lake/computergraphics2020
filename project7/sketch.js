@@ -101,11 +101,11 @@ function draw(){
     camera(posx, posy, posz, 0, 0, 0, 0, 0, 1);
   }
   else if(view_select.value() == 'top'){
-    perspective();
+    perspective(PI/1.5);
     camera(posx, posy, posz+500, posx+300*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), 0, 0, -1);
   }
   else if(view_select.value() == 'dragon-center'){
-    perspective();
+    perspective(PI/6.0);
     camera(posx+180*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), d_posx, d_posy, d_posz, 0, 0, -1);
   }
   // push();
