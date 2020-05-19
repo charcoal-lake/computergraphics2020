@@ -10,7 +10,7 @@ let sound_button;
 let view_select;
 
 let viewx, viewy, viewz;
-let panx=0;
+let panx=0, fovy=0;
 let left=false, right=false, forward=false, backward=false;
 let posx=-2500, posy=-2500, posz=500, bob=0, shake=3;
 
@@ -93,7 +93,7 @@ function draw(){
 
 
   if(view_select.value() == 'rider view') {
-    perspective();
+    perspective(PI/3.0+fovy);
     camera(posx, posy, posz, posx+300*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), panx, 0, -1);
   } 
   else if(view_select.value() == 'ortho'){
@@ -192,11 +192,12 @@ function keyEvents(){
       bob = -PI/2;
     }
     forward = true;
-
-
+    
+    if(fovy < 0.5) fovy += 0.01;
   }
   else {
     forward = false;
+    if(fovy > 0.0) fovy -= 0.02;
   }
     
   if(keyIsDown(83)){ // move backward 'a'
