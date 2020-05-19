@@ -98,7 +98,7 @@ function draw(){
   } 
   else if(view_select.value() == 'ortho'){
     ortho(-width / 2, width / 2, height / 2, -height / 2, 0, 500);
-    camera(posx, posy, posz, 0, 0, 0, 0, 0, 1);
+    camera(posx, posy, 250, -1, -1, -1, 0, 0, 1);
   }
   else if(view_select.value() == 'top'){
     perspective(PI/1.5);
