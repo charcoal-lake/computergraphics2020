@@ -12,7 +12,7 @@ let view_select;
 let viewx, viewy, viewz;
 let panx=0;
 let left=false, right=false, forward=false, backward=false;
-let posx=-250, posy=-250, posz=250, bob=0, shake=3;
+let posx=-2500, posy=-2500, posz=500, bob=0, shake=3;
 
 let title, desc;
 
@@ -65,7 +65,7 @@ function setup(){
   view_select.position(120, height+50);
 
 
-  decs = createDiv('SHIFT to go up. <br> CTRL to go down. <br> W, A, S, D to move the dragon. <br> try W+A and W+D to pan the camera. <br> try selectors and BGM button.');
+  decs = createDiv('SHIFT to ascend. <br> CTRL to descend. <br> W, A, S, D to move the dragon. <br> try W+A and W+D to pan the camera. <br> try selectors and BGM button.');
   decs.style('font-size', '13px');
   decs.style('font-family', 'Roboto Mono');
   decs.position(width/2, height+100);
@@ -84,7 +84,7 @@ function draw(){
  background(250);
   fill('white');
 
-  viewx = map(mouseX, 0, width, PI/2, -PI/2);
+  viewx = map(mouseX, width/4, width*3/4, PI/2, -PI/2);
   viewz = map(mouseY, height, 0, -PI/4, PI/4);
  
   keyEvents();
@@ -94,7 +94,7 @@ function draw(){
 
   if(view_select.value() == 'rider view') {
     perspective();
-    camera(posx, posy, posz, posx+180*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), panx, 0, -1);
+    camera(posx, posy, posz, posx+300*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), panx, 0, -1);
   } 
   else if(view_select.value() == 'ortho'){
     ortho(-width / 2, width / 2, height / 2, -height / 2, 0, 500);
@@ -102,7 +102,7 @@ function draw(){
   }
   else if(view_select.value() == 'top'){
     perspective();
-    camera(posx, posy, posz+500, posx+180*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), 0, 0, -1);
+    camera(posx, posy, posz+500, posx+300*sin(viewx), posy+100, posz+180*sin(viewz)+shake*sin(bob), 0, 0, -1);
   }
   else if(view_select.value() == 'dragon-center'){
     perspective();
@@ -123,7 +123,7 @@ function draw(){
   push();
   translate(d_posx, d_posy, d_posz);
   rotateX(PI/2);
-  rotateY(PI-panx);
+  rotateY(PI-2*viewx);
 
   push();
   if(posz > 100)  rotateZ(PI/3+sin(bob));
