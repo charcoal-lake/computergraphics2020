@@ -95,18 +95,23 @@ function draw(){
     background(color('grey'));
 
 
+    for(let i= 0; i<18; i++){
+        bloom_vtx[0][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 1));
+        bloom_vtx[1][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 0.95));
+        bloom_vtx[2][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 0.9));
+
+    }
+
+
     texture(sky);
     sphere(2000, 2000);
     fill(color('white'));
 
     camera();
     
-    // for(let i= 0; i<18; i++){
-    //     bloom_vtx[0][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 1));
-    //     bloom_vtx[1][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 0.95));
-    //     bloom_vtx[2][i] = new p5.Vector.lerp(bloom_before[i], bloom_after[i], map(time.value(), 1000, 1500, 0, 0.9));
+    
 
-    // }
+
 
     rotateX(radians(rotx.value()));
     rotateZ(radians(roty.value()));
@@ -154,6 +159,7 @@ function draw(){
     noStroke();
     texture(sand);
     plane(2000, 2000);
+
 }
 
 function petal(layer){
@@ -162,7 +168,6 @@ function petal(layer){
 
     for(let i=0; i<5; i++){
         beginShape();
-        vertex(0, 0, 0);
         for(let j=step; j<step+3; j++){
             vertex(bloom_vtx[layer][j].x, bloom_vtx[layer][j].y, bloom_vtx[layer][j].z);
         }
