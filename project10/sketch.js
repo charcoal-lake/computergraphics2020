@@ -8,6 +8,8 @@ let posx, posy;
 
 function preload() {
     tree = loadModel('./assets/lowpolytree.obj');
+    ground = loadImage('./assets/texture.jpg');
+    sound = loadSound('./assets/woods_ambient music_cut.mp3');
     // tree2 = loadModel('tree2.obj');
     myshader = loadShader('shader.vert', 'shader.frag');
 }
@@ -16,7 +18,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight, WEBGL);
     noStroke();
     textureWrap(REPEAT);
-    pg = createGraphics(256, 256, WEBGL);
+    pg = createGraphics(1000, 1000, WEBGL);
     pg.noStroke();
     seed = random(0, 100);
 }
@@ -24,18 +26,20 @@ function setup() {
 function draw() {
     randomSeed(seed);
     orbitControl();
-    background(220);
-  //  directionalLight(255, 255, 255, 1, 0, -1);
-    pointLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -10);
+    background(150);
+    directionalLight(255, 255, 255, 1, 0, 1);
+    pointLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -100);
     spotLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -10, 1, 0, 1);
-    camera(0, 100, (height/2.0) / tan(PI*30.0 / 180.0), 0, 0, 0, 0, 1, 0);
+    camera(200, 80, (height/2.0) / tan(PI*30.0 / 180.0)-200, 0, 0, -200, 0, 1, 0);
 
     pg.shader(myshader);
-    myshader.setUniform("u_border", map(mouseX, 0, width, 0.0, 1.0));
-    myshader.setUniform('u_resolution', [width, height]);
-    myshader.setUniform('u_mouse', map(mouseX, 0, width, 0, 7));
-    myshader.setUniform('u_time', frameCount * 0.01);
-    pg.rect(-128, -128, 256, 256);
+
+    myshader.setUniform("u_resolution", [width,height]);
+    myshader.setUniform("u_time", frameCount * 0.01);
+    myshader.setUniform("u_mouse", [(width-mouseX)*2,(height-mouseY)*2]);
+    myshader.setUniform("u_alpha", map(mouseX, 0, width, 0, 1));
+
+    pg.rect(-500, -500, 1000, 1000);
     texture(pg);
 
     push();
@@ -46,7 +50,7 @@ function draw() {
         for(let i=0; i<10; i++){
             push()
             let size = random(20, 50);
-            translate(0, 80-size);
+            translate(0, 100-size);
             scale(size);
             rotateX(PI);
             model(tree);
@@ -57,9 +61,16 @@ function draw() {
     }
     pop();
 
+
+    sphere(2000);
+
     push();
     translate(0, 120, 0);
     rotateX(PI/2);
-    plane(1000, 1000);
+    textureWrap(MIRROR);
+    texture(ground);
+    plane(1024, 1024);
     pop();
+
+
 }
