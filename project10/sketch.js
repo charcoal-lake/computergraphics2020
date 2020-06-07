@@ -127,7 +127,6 @@ class fogLayer{
     constructor(start){
         this.start = start;
         fog();
-
     }
 
     display(){
@@ -141,7 +140,6 @@ class fogLayer{
         push();
         fill(255, 30);
         translate(0, 0, this.start);
-        fog();
         texture(fogTex);
         plane(width*2, 500);
         pop();
