@@ -28,19 +28,17 @@ function setup() {
     fogTex = createGraphics(width*2, 500);
 
     seed = random(0, 100);
-    music_button = createButton('sound on');
+    music_button = createButton('sound');
     music_button.position(windowWidth-100, windowHeight*2/3+10);
     music_button.mousePressed(function(){
         if(sound.isPlaying()) {
             sound.stop();
-            music_button.value('sound off');
         }
         else {
             sound.play();
-            music_button.value('sound on');
         }
     });
-    camera_button = createButton('camera on');
+    camera_button = createButton('camera');
     camera_button.position(windowWidth-200, windowHeight*2/3+10);
     camera_button.mousePressed(function(){
         cam_flag = !cam_flag;
