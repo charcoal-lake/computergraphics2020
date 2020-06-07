@@ -15,7 +15,7 @@ let desc, title;
 function preload() {
     tree = loadModel('./assets/lowpolytree.obj');
     ground = loadImage('./assets/texture.jpeg');
-    sound = loadSound('./assets/woods_ambient music_cut.mp3');
+    sound = loadSound('./assets/music.mp3');
     myshader = loadShader('shader.vert', 'shader.frag');
 }
 
