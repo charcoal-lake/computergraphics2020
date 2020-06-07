@@ -123,13 +123,7 @@ function draw() {
     fogs[1].display();
     fogs[2].display();
 
-    
-/*
-    fog();
-    texture(fogTex);
-    stroke(0);
-    plane(width, 500);
- */
+   
 }
 
 function fog(){
