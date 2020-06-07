@@ -4,13 +4,13 @@ let pg;
 let seed;
 let dist = 100;
 let music_button;
+let camera_button, cam_flag = true;
 
 let fog_num = 3;
 let fogs = [];
 
 let sl;
-
-let posx, posy;
+let desc, title;
 
 function preload() {
     tree = loadModel('./assets/lowpolytree.obj');
@@ -29,13 +29,23 @@ function setup() {
 
     seed = random(0, 100);
     music_button = createButton('sound on');
-    music_button.position(10, windowHeight*2/3+10);
+    music_button.position(windowWidth-100, windowHeight*2/3+10);
     music_button.mousePressed(function(){
         if(sound.isPlaying()) {
             sound.stop();
+            music_button.value('sound off');
         }
-        else sound.play();
+        else {
+            sound.play();
+            music_button.value('sound on');
+        }
     });
+    camera_button = createButton('camera on');
+    camera_button.position(windowWidth-200, windowHeight*2/3+10);
+    camera_button.mousePressed(function(){
+        cam_flag = !cam_flag;
+    })
+
 
     sl = createSlider(0, 1000);
     sl.position(10, 10);
@@ -43,6 +53,17 @@ function setup() {
     fogs[0] = new fogLayer(0);
     fogs[1] = new fogLayer(300);
     fogs[2] = new fogLayer(800);
+
+    title = createDiv('Dark Forest');
+    title.position(110, windowHeight*2/3+50);
+    title.style('font-family', 'Roboto Mono');
+    title.style('font-size', '30px');
+    title.style('font-weight', 'bold');
+
+    desc = createDiv('description');
+    desc.position(400, windowHeight*2/3+50);
+    desc.style('font-size', '13px');
+    desc.style('font-family', 'Roboto Mono');
 
 }
 
@@ -54,8 +75,9 @@ function draw() {
     directionalLight(255, 255, 255, 1, 0, 1);
     pointLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -100);
     spotLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -10, 1, 0, 1);
-    camera(200, 80, (height/2.0) / tan(PI*30.0 / 180.0)-sl.value(), 0, 0, -200, 0, 1, 0);
-
+    if(cam_flag == true){
+        camera(200, 80, (height/2.0) / tan(PI*30.0 / 180.0)-sl.value(), 0, 0, -200, 0, 1, 0);
+    }
 
     pg.shader(myshader);
 
