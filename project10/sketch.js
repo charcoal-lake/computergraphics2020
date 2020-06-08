@@ -12,6 +12,8 @@ let fogs = [];
 let sl;
 let desc, title;
 
+let posx=0, posy =0;
+
 function preload() {
     tree = loadModel('./assets/lowpolytree.obj');
     ground = loadImage('./assets/texture.jpeg');
@@ -38,15 +40,6 @@ function setup() {
             sound.play();
         }
     });
-    camera_button = createButton('camera');
-    camera_button.position(windowWidth-200, windowHeight*2/3+10);
-    camera_button.mousePressed(function(){
-        cam_flag = !cam_flag;
-    })
-
-
-    sl = createSlider(0, 1000);
-    sl.position(10, 10);
 
     fogs[0] = new fogLayer(0);
     fogs[1] = new fogLayer(300);
@@ -58,24 +51,22 @@ function setup() {
     title.style('font-size', '30px');
     title.style('font-weight', 'bold');
 
-    desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> If you press \'camera\' button, you can drag or scroll on the screen to look around(camera is disabled). <br>If you press the button again, the view returns to its original position (camera is activated).<br> Slider above controls the z position of camera.');
+    desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> Drag around the screen to look around the view. ');
     desc.position(400, windowHeight*2/3+50);
-    desc.style('font-size', '10px');
+    desc.style('font-size', '13px');
     desc.style('font-family', 'Roboto Mono');
 
 }
 
 function draw() {
     randomSeed(seed);
-    orbitControl();
     background(150);
 
     directionalLight(255, 255, 255, 1, 0, 1);
     pointLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -100);
     spotLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -10, 1, 0, 1);
-    if(cam_flag == true){
-        camera(200, 80, (height/2.0) / tan(PI*30.0 / 180.0)-sl.value(), 0, 0, -200, 0, 1, 0);
-    }
+
+    camera(200+posx, 80+posy, (height/2.0) / tan(PI*30.0 / 180.0)+200, 0, 0, -200, 0, 1, 0);
 
     pg.shader(myshader);
 
@@ -88,9 +79,9 @@ function draw() {
     texture(pg);
 
     push();
-    translate(-dist*10/2, 0, -dist*5/2);
+    translate(-dist*10/2, 0, -dist*10/2);
 
-    for(let j=0; j<5; j++){
+    for(let j=0; j<10; j++){
         translate(0, 0, dist);
         for(let i=0; i<10; i++){
             push()
@@ -113,7 +104,7 @@ function draw() {
     translate(0, 120, 0);
     rotateX(PI/2);
     texture(ground);
-    plane(1000, 1000);
+    plane(2000, 2000);
     pop();
 
 
@@ -159,4 +150,17 @@ class fogLayer{
         pop();
     }
 
+}
+
+
+function mouseDragged(){
+    if(pmouseX < mouseX && posx < 400) {
+        posx += 5;
+    }
+    else if (pmouseX > mouseX && posx > -400){
+        posx -= 5;
+    }
+
+    if(pmouseY < mouseY && posy < 0) posy += 5;
+    else if(pmouseY > mouseY && posy > -200) posy -=5;
 }
