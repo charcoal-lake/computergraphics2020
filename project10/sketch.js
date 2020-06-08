@@ -60,7 +60,7 @@ function setup() {
 
     desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> If you press \'camera\' button, you can drag or scroll on the screen to look around(camera is disabled). <br>If you press the button again, the view returns to its original position (camera is activated).<br> Slider above controls the z position of camera.');
     desc.position(400, windowHeight*2/3+50);
-    desc.style('font-size', '13px');
+    desc.style('font-size', '10px');
     desc.style('font-family', 'Roboto Mono');
 
 }
