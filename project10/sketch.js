@@ -51,7 +51,7 @@ function setup() {
     title.style('font-size', '30px');
     title.style('font-weight', 'bold');
 
-    desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> Drag around the screen to look around the view. ');
+    desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> Drag around the screen to look around the view. <br> Mouse position changes the position of the light behind the forest.');
     desc.position(400, windowHeight*2/3+50);
     desc.style('font-size', '13px');
     desc.style('font-family', 'Roboto Mono');
