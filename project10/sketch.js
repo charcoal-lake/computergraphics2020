@@ -52,13 +52,13 @@ function setup() {
     fogs[1] = new fogLayer(300);
     fogs[2] = new fogLayer(800);
 
-    title = createDiv('Dark Forest');
+    title = createDiv('Blind Forest');
     title.position(110, windowHeight*2/3+50);
     title.style('font-family', 'Roboto Mono');
     title.style('font-size', '30px');
     title.style('font-weight', 'bold');
 
-    desc = createDiv('description');
+    desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> If you press \'camera\' button, you can drag or scroll on the screen to look around(camera is disabled). <br>If you press the button again, the view returns to its original position (camera is activated).<br> Slider above controls the z position of camera.');
     desc.position(400, windowHeight*2/3+50);
     desc.style('font-size', '13px');
     desc.style('font-family', 'Roboto Mono');
