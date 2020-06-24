@@ -80,6 +80,7 @@ class grass{
         this.iy = y;
         this.rate = 0;
         this.growth = 0;
+        this.offset=0;
         this.color_brightness = 48;
     }
 
@@ -94,15 +95,17 @@ class grass{
         if(this.growth < 0 && grid[this.ix][this.iy] ==1) {
             grid[this.ix][this.iy] = -1;
         }
-        this.growth = 3*sin(this.rate/500);
-        this.color_brightness = map(this.growth, 0, 3, 88, 48);
+        if(this.offset > 0) this.offset -= 0.01;
+        this.growth = 8*sin(this.rate/500);
         this.display();
     }
 
     display(){
+        let grass_rate = constrain(this.growth, 0, 3+this.offset);
+        this.color_brightness = map(grass_rate, 0, 3, 48, 88+this.offset);
         push();
         translate(this.x, this.y, 0);
-        scale(this.growth);
+        scale(grass_rate);
         noStroke();
         fill(color(121, 58, this.color_brightness));
         rotateX(PI/2);
@@ -110,6 +113,10 @@ class grass{
         rotateY(PI/2);
         plane(10, 10);
         pop();
+    }
+
+    set_offset(offset){
+        this.offset = offset;
     }
 }
 
@@ -126,15 +133,15 @@ class tree{
         this.size = random(80, 150);
         this.colorset = [];
         this.colorset.push(color(random(13, 32), random(40, 50), random(20, 40)));
-        this.colorset.push(color(random(145, 180), random(80, 90), random(50, 60)));
-
+        this.colorset.push([random(100, 180), random(80, 90), random(50, 60)]);
+        this.offset=0;
         // random blocks
         this.blocks = [];
         this.blocks_disp = [];
         for(let i=0; i<random(1, 3); i++){
             this.blocks.push(random(50, 80));
             this.blocks_disp.push( new p5.Vector(random(-0.5, 0.5)*this.size, random(-0.5, 0.5)*this.size, random(-0.5, 0.5)*this.size) );
-            this.colorset.push(color(random(145, 180), random(60, 80), random(60, 70)));
+            this.colorset.push([random(100, 180), random(60, 80), random(60, 70)]);
         }
     }
 
@@ -144,11 +151,12 @@ class tree{
             this.rate =0;
         }
         else if(x==1){
-            this.rate +=0.1;
+            this.rate +=1;
         }
         if(this.growth < 0 && grid[this.ix][this.iy] ==1) {
             grid[this.ix][this.iy] = -1;
         }
+        if(this.offset > 0) this.offset -= 0.01;
         this.growth = 8*sin(this.rate/500);
         this.display();
         
@@ -156,10 +164,10 @@ class tree{
     }
 
     display(){
-        let height_rate = map(this.growth, 0, 1, 0, this.h);
+        let height_rate = map(this.growth, 0, 3, 0, this.h);
         let height_growth = constrain(height_rate, 0, this.h);
 
-        let trunk_rate = map(this.growth, 0, 1, 0, 20);
+        let trunk_rate = map(this.growth, 0, 3, 0, 20);
         let trunk_growth = constrain(trunk_rate, 0, 20);
         push();
         translate(this.x, this.y, -height_growth/2);
@@ -167,22 +175,22 @@ class tree{
         box(trunk_growth, trunk_growth, -height_growth);
         pop();
 
-        let main_rate = map(this.growth, 0.3, 2, 0, this.size);
-        let main_growth = constrain(main_rate, 0, this.size);
+        let main_rate = map(this.growth, 0.4, 5, 0, this.size+this.offset*10);
+        let main_growth = constrain(main_rate, 0, this.size+this.offset*10);
         push();
         translate(this.x, this.y, -height_growth);
-        fill(this.colorset[1]);
+        fill(this.colorset[1][0], this.colorset[1][1], this.colorset[1][2]+this.offset*100);
         box(main_growth);
         pop();
 
         push();
         translate(this.x, this.y, -height_growth);
         for(let i=0; i<this.blocks.length; i++){
-            let block_rate = map(this.growth, 1.0, 4.0, 0, this.blocks[i]);
-            let block_growth = constrain(block_rate, 0, this.blocks[i]);
+            let block_rate = map(this.growth, 3.0, 6.0, 0, this.blocks[i]+this.offset*10);
+            let block_growth = constrain(block_rate, 0, this.blocks[i]+this.offset*10);
             push();
             translate(this.blocks_disp[i]);
-            fill(this.colorset[2+i]);
+            fill(this.colorset[2+i][0], this.colorset[2+i][1], this.colorset[2+i][2]+this.offset*100);
             box(block_growth);
             pop();    
         }
@@ -203,6 +211,8 @@ class flower{
         this.bloom = 0;
         this.size = random(0.8, 2.0);
         this.stem_length = random(10, 15);
+        this.offset = 0;
+        this.tar_offset=0;
 
         this.bud_rotate = [
             random(radians(-10, 10)),
@@ -221,7 +231,7 @@ class flower{
         this.rate =0;
         this.growth = 0.0
         this.colorset =[];
-        this.colorset.push(color(random(200, 360), random(65, 85), random(50, 75)));
+        this.colorset.push([random(200, 360), random(65, 85), random(50, 75)]);
     }
 
     display(){
@@ -242,12 +252,13 @@ class flower{
         if(this.growth < 0 && grid[this.ix][this.iy] ==1) {
             grid[this.ix][this.iy] = -1;
         }
-        this.growth = 4*sin(this.rate/500);
+        this.growth = 8*sin(this.rate/500);
+        if(this.offset > 0) this.offset -= 0.01;
         this.display();
     }
 
     phase_1(){
-        let stem_rate = map(this.growth, 0, 2, 0, this.stem_point.length);
+        let stem_rate = map(this.growth, 0, 3, 0, this.stem_point.length);
         let stem_growth = constrain(stem_rate, 0, this.stem_point.length);
         let i;
         strokeWeight(5);
@@ -261,30 +272,28 @@ class flower{
         noStroke()
 
         if(i>1){
-            let bud_rate = map(this.growth, 1.5, 4, 0, this.size);
-            let bud_growth = constrain(bud_rate, 0, this.size);
+            let bud_rate = map(this.growth, 2.5, 6, 0, this.size+this.offset);
+            let bud_growth = constrain(bud_rate, 0, this.size+this.offset);
             push();
             translate(this.stem_point[i-2]);
             rotateX(this.bud_rotate[0]); rotateY(this.bud_rotate[1]); rotateZ(this.bud_rotate[2]);
             scale(bud_growth);
-            fill(this.colorset[0]);
+            fill(this.colorset[0][0], this.colorset[0][1], this.colorset[0][2]+this.offset*100);
             this.bud(bud_growth);
             pop();
         }
     }
 
     phase_2(){
-        let leaf_rate = map(this.growth, 0, 2, 0, this.size);
-        let leaf_growth = constrain(leaf_rate, 0, this.size);
+        let leaf_rate = map(this.growth, 0, 3.5, 0, this.size+this.offset);
+        let leaf_growth = constrain(leaf_rate, 0, this.size+this.offset);
         fill(color(121, 50, 50));
         push();
         scale(leaf_growth);
         push();
         rotateZ(this.leaf_rotate);
-        rotateX(PI/8);
         this.leaf();
         rotateZ(-PI);
-        rotateX(PI/3);
         this.leaf();
         pop();
         pop();
@@ -332,13 +341,12 @@ class flower{
     leaf(){
         beginShape();
         vertex(0, 0, 0);
-        bezierVertex(8, 0, 3, 8, -8*3/2, 3, 0, -8*2, 0);
-        vertex(0, 0, 0);
+        //bezierVertex(8, 0, 3, 8, 8*3/2, 3, 0, 8*2, 0);
         endShape();
     
         beginShape();
-        vertex(0, 0, 0);
-        bezierVertex(-8, 0, 3, -8, -8*3/2, 3, 0, -8*2, 0);
+        vertex(0,0,0);
+        //bezierVertex(-8, 0, 3, -8, -8*3/2, 3, 0, -8*2, 0);
         vertex(0, 0, 0);
         endShape();
     }
