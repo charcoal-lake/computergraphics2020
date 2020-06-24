@@ -47,10 +47,10 @@ function preload(){
 
     ambient = loadSound('./assets/sound/ambient.mp3');
     walk_sound = loadSound('./assets/sound/walk.mp3');
-    for (let i=0; i<4; i++){
-        flute_sound[i] = loadSound('./assets/sound/flute0'+(i+1)+'.mp3');
+    for (let i=0; i<3; i++){
+        flute_sound[i] = loadSound('./assets/sound/bell'+(i+1)+'.mp3');
     }
-    bg_music = loadSound('./assets/sound/bg.mp3');
+    bg_music = loadSound('./assets/sound/Lord_Of_The_Dawn.mp3');
 
 }
 
@@ -93,7 +93,7 @@ function draw(){
     if(!bg_music.isPlaying()){
         bg_music.loop();
     }
-    if(flute_sound[0].isPlaying() || flute_sound[1].isPlaying() || flute_sound[2].isPlaying()|| flute_sound[3].isPlaying()){
+    if(flute_sound[0].isPlaying() || flute_sound[1].isPlaying() || flute_sound[2].isPlaying()){
         flute = true;
     }
     else flute =false;
@@ -161,50 +161,3 @@ function draw(){
 
 }
 
-
-function blow(){
-
-
-    if(mic_vol > 0.001 && !mouseIsPressed){
-        offset = mic_vol;
-    }
-    else if(mouseIsPressed){
-        offset += 0.001;
-        if(flute == false){
-            let i = random(0, 4);
-            flute_sound[int(i)].setVolume(0.3);
-            flute_sound[int(i)].play();
-        }
-    }
-
-    for(let i=0; i<flowers.length; i++){
-        if(flowers[i].x >= deer_posx-200 && flowers[i].x <= deer_posx+200 &&
-            flowers[i].y >= deer_posy-200 && flowers[i].y <= deer_posy+200){
-                if(offset > 0.001) flowers[i].offset = offset*dist(flowers[i].x, flowers[i].y, deer_posx, deer_posy)/20;
-        }
-        else {
-            flowers[i].offset = 0;
-        }
-    }
-
-    for(let i=0; i<grasses.length; i++){
-        if(grasses[i].x >= deer_posx-200 && grasses[i].x <= deer_posx+200 &&
-            grasses[i].y >= deer_posy-200 && grasses[i].y <= deer_posy+200){
-                if(offset > 0.001) grasses[i].offset = offset*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
-        }
-        else {
-            grasses[i].offset = 0;
-        }
-    }
-
-    for(let i=0; i<trees.length; i++){
-        if(trees[i].x >= deer_posx-200 && trees[i].x <= deer_posx+200 &&
-            trees[i].y >= deer_posy-200 && trees[i].y <= deer_posy+200){
-                if(offset > 0.001) trees[i].offset = offset*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
-        }
-        else {
-            trees[i].offset = 0;
-        }
-    }
-
-}
