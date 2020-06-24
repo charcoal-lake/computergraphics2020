@@ -95,7 +95,7 @@ function setUI(){
     name.position(20, 60);
     name.style('font-size', '15px');
 
-    footer = createDiv('Press SPACEBAR to switch perspective (1st person, 3rd person)<br>W, A, S, D to move deer. As the deer moves, the flowers and trees are generated.<br>If you make some sound through mic, the forest will listen to you.')
+    footer = createDiv('Press SPACEBAR to switch perspective (1st person, 3rd person)<br>W, A, S, D to move deer. As the deer moves, the flowers and trees are generated.<br>If you make some sound through mic, the forest will listen to you.<br>If you keep your mouse pressed, the forest around the deer god will become more lively.')
     footer.position(20, height+110);
     footer.style('line-height', '15px');
 }
