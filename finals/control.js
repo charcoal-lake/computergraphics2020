@@ -1,8 +1,7 @@
 
 
 function moveDeer(option){
-    if(keyIsPressed && deer_posx > -land_width/2 && deer_posx < land_width/2
-        && deer_posy < land_width/2 && deer_posy > -land_width/2){
+    if(keyIsPressed){
 
         if(option == 'first person'){
             if(key == 'w' || key == 'W'){
@@ -44,6 +43,15 @@ function moveDeer(option){
         }
         deer_movement+=0.1;
         stepGrid(deer_posx, deer_posy);
+
+        if(!walk_sound.isPlaying()){
+            walk_sound.loop();
+        }
+    }
+    else {
+        if(walk_sound.isPlaying()){
+            walk_sound.stop();
+        }
     }
 }
 
@@ -51,14 +59,14 @@ function moveDeer(option){
 function stepGrid(x, y){
 
     for(let i=0; i<grid_max; i++){
-        if( x < i*grid_size-grid_max*grid_size/2 && x >= (i-1)*grid_size-grid_max*grid_size/2 ){
+        if( x < i*grid_size-grid_max*grid_size/2+grid_size/2 && x >= (i-1)*grid_size-grid_max*grid_size/2+grid_size/2 ){
             posx = i;
             break;
         }
     }
 
     for(let j=0; j<grid_max; j++){
-        if( y < j*grid_size-grid_max*grid_size/2 && y >= (j-1)*grid_size-grid_max*grid_size/2 ){
+        if( y < j*grid_size-grid_max*grid_size/2+grid_size/2 && y >= (j-1)*grid_size-grid_max*grid_size/2+grid_size/2 ){
             posy = j;
             break;
         }

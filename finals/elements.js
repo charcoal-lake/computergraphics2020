@@ -74,8 +74,8 @@ class deer{
 
 class grass{
     constructor(x, y){
-        this.x = random((x-1)*grid_size-grid_max*grid_size/2, x*grid_size-grid_max*grid_size/2);
-        this.y = random((y-1)*grid_size-grid_max*grid_size/2, y*grid_size-grid_max*grid_size/2);
+        this.x = random((x-1)*grid_size-(grid_max-1)*grid_size/2, x*grid_size-(grid_max-1)*grid_size/2);
+        this.y = random((y-1)*grid_size-(grid_max-1)*grid_size/2, y*grid_size-(grid_max-1)*grid_size/2);
         this.ix = x;
         this.iy = y;
         this.rate = 0;
@@ -123,8 +123,8 @@ class grass{
 
 class tree{
     constructor(x, y){
-        this.x = random((x-1)*grid_size-grid_max*grid_size/2, x*grid_size-grid_max*grid_size/2);
-        this.y = random((y-1)*grid_size-grid_max*grid_size/2, y*grid_size-grid_max*grid_size/2);
+        this.x = random((x-1)*grid_size-(grid_max-1)*grid_size/2, x*grid_size-(grid_max-1)*grid_size/2);
+        this.y = random((y-1)*grid_size-(grid_max-1)*grid_size/2, y*grid_size-(grid_max-1)*grid_size/2);
         this.ix = x;
         this.iy = y;
         this.h = random(150, 240);
@@ -201,8 +201,8 @@ class tree{
 
 class flower{
     constructor(x, y){
-        this.x = random((x-1)*grid_size-grid_max*grid_size/2, x*grid_size-grid_max*grid_size/2);
-        this.y = random((y-1)*grid_size-grid_max*grid_size/2, y*grid_size-grid_max*grid_size/2);
+        this.x = random((x-1)*grid_size-(grid_max-1)*grid_size/2, x*grid_size-(grid_max-1)*grid_size/2);
+        this.y = random((y-1)*grid_size-(grid_max-1)*grid_size/2, y*grid_size-(grid_max-1)*grid_size/2);
         this.ix = x;
         this.iy = y;
 
@@ -291,8 +291,16 @@ class flower{
         push();
         scale(leaf_growth);
         push();
+        rotateX(PI/4);
+        rotateY(-PI/4);
         rotateZ(this.leaf_rotate);
         this.leaf();
+        pop();
+
+        push();
+        rotateX(-PI/4);
+        rotateY(PI/4);
+        rotateZ(this.leaf_rotate);
         rotateZ(-PI);
         this.leaf();
         pop();
@@ -341,12 +349,13 @@ class flower{
     leaf(){
         beginShape();
         vertex(0, 0, 0);
-        //bezierVertex(8, 0, 3, 8, 8*3/2, 3, 0, 8*2, 0);
+        bezierVertex(8, 0, 3, 8, -8*3/2, 3, 0, -8*2, 0);
+        vertex(0, 0, 0);
         endShape();
     
         beginShape();
-        vertex(0,0,0);
-        //bezierVertex(-8, 0, 3, -8, -8*3/2, 3, 0, -8*2, 0);
+        vertex(0, 0, 0);
+        bezierVertex(-8, 0, 3, -8, -8*3/2, 3, 0, -8*2, 0);
         vertex(0, 0, 0);
         endShape();
     }

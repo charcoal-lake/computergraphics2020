@@ -25,23 +25,29 @@ let cam_dx;
 let view_dist = 150, move_dist = 2;
 
 let test_tree, test_flower, test_grass;
-let title, desc, footer, mode;
+let title, desc, name, footer, mode;
+
+let ambient, walk_sound, bell_sound=[],bell=false, bg_music;
 
 
 function preload(){
-    deer_body = loadModel('./assets/body.obj');
-    deer_head = loadModel('./assets/head.obj');
-    deer_left_leg[0] = loadModel('./assets/front-leg-upper-left.obj');
-    deer_left_leg[1] = loadModel('./assets/front-leg-lower-left.obj');
-    deer_left_leg[2] = loadModel('./assets/back-leg-left.obj');
+    deer_body = loadModel('./assets/obj/body.obj');
+    deer_head = loadModel('./assets/obj/head.obj');
+    deer_left_leg[0] = loadModel('./assets/obj/front-leg-upper-left.obj');
+    deer_left_leg[1] = loadModel('./assets/obj/front-leg-lower-left.obj');
+    deer_left_leg[2] = loadModel('./assets/obj/back-leg-left.obj');
 
-    deer_right_leg[0] = loadModel('./assets/front-leg-upper-right.obj');
-    deer_right_leg[1] = loadModel('./assets/front-leg-lower-right.obj');
-    deer_right_leg[2] = loadModel('./assets/back-leg-right.obj');
+    deer_right_leg[0] = loadModel('./assets/obj/front-leg-upper-right.obj');
+    deer_right_leg[1] = loadModel('./assets/obj/front-leg-lower-right.obj');
+    deer_right_leg[2] = loadModel('./assets/obj/back-leg-right.obj');
 
     for(let i=1; i<=6; i++){
-        sky[i-1] = loadImage('./assets/sky-0'+i+'.png');
+        sky[i-1] = loadImage('./assets/images/sky-0'+i+'.png');
     }
+
+    ambient = loadSound('./assets/sound/ambient.mp3');
+    walk_sound = loadSound('./assets/sound/walk.mp3');
+    bg_music = loadSound('./assets/sound/bg.mp3');
 
 }
 
@@ -56,16 +62,13 @@ function setup(){
     }
     colorMode(HSB, 360, 100, 100, 100);
 
-    // test_tree = new tree(20, 20);
-    // test_flower = new flower(20, 20);
-    // test_grass =[];
-    // for (let i=0; i<3; i++)
-    //     test_grass.push(new grass(20, 20));
-
     main_deer = new deer(0,0);
     mode = 'first person';
     mic = new p5.AudioIn();
     mic.start();
+    ambient.loop();
+    ambient.setVolume(0.1);
+    bg_music.loop();
 
     noStroke();
     cam_dx = cam_dz = 0;
@@ -77,7 +80,16 @@ function draw(){
     
     background(250, 90, 22);
     camera_settings();
-    
+
+    if(!ambient.isPlaying()){
+        ambient.loop();
+        ambient.setVolume(0.1);
+    }
+
+    if(!bg_music.isPlaying()){
+        bg_music.loop();
+    }
+
     let sum=0;
     for(let i=0; i< grid_max; i++){
         for(let j=0; j<grid_max; j++){
@@ -85,6 +97,7 @@ function draw(){
         }
     }
     flourish_rate = sum;
+    ambient.setVolume(map(flourish_rate, 0, (grid_max-1)*(grid_max-1), 0.0, 1.0));
     mic_vol = mic.getLevel();
     blow();
 
@@ -113,16 +126,27 @@ function draw(){
         skybox();
     else {
         push();
-        translate(land_width/2, 0, -land_width/2);
+        translate(land_width/2, 0);
         rotateY(PI/2);
-        fill(155, 50, 50);
+        // fill(155, 50, 50);
+        rotateZ(PI/2);
+        texture(sky[1]);
         plane(land_width);
         pop();
 
         push();
-        translate(0, land_width/2, -land_width/2);
+        translate(0, land_width/2);
         rotateX(PI/2);
-        fill(155, 40, 60);
+        rotateY(-PI);
+        texture(sky[2]);
+        //fill(155, 40, 60);
+        plane(land_width);
+        pop();
+
+        push();
+        translate(0, 0, land_width/2);
+        texture(sky[0]);
+        //fill(155, 40, 60);
         plane(land_width);
         pop();
     }
@@ -132,11 +156,12 @@ function draw(){
 
 function blow(){
 
-    if(mic_vol > 0.005){
+
+    if(mic_vol > 0.001){
         for(let i=0; i<flowers.length; i++){
             if(grasses[i].x >= deer_posx-200 && grasses[i].x <= deer_posx+200 &&
                 grasses[i].y >= deer_posy-200 && grasses[i].y <= deer_posy+200){
-                    if(mic_vol > 0.1) flowers[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
+                    if(mic_vol > 0.001) flowers[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
             }
             else {
                 flowers[i].offset = 0;
@@ -146,7 +171,7 @@ function blow(){
         for(let i=0; i<grasses.length; i++){
             if(grasses[i].x >= deer_posx-200 && grasses[i].x <= deer_posx+200 &&
                 grasses[i].y >= deer_posy-200 && grasses[i].y <= deer_posy+200){
-                    if(mic_vol > 0.1) grasses[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
+                    if(mic_vol > 0.001) grasses[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
             }
             else {
                 grasses[i].offset = 0;
@@ -156,7 +181,7 @@ function blow(){
         for(let i=0; i<trees.length; i++){
             if(trees[i].x >= deer_posx-200 && trees[i].x <= deer_posx+200 &&
                 trees[i].y >= deer_posy-200 && trees[i].y <= deer_posy+200){
-                    if(mic_vol > 0.1) trees[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
+                    if(mic_vol > 0.001) trees[i].offset = mic_vol*dist(grasses[i].x, grasses[i].y, deer_posx, deer_posy)/20;
             }
             else {
                 trees[i].offset = 0;

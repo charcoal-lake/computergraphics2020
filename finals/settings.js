@@ -28,7 +28,7 @@ function skybox(){
     translate(deer_posx, deer_posy, 0);
 
     push();
-    translate(1000, 0, -200);
+    translate(1000, 0, 0);
     rotateY(PI/2);
     rotateZ(PI/2);
     texture(sky[3]);
@@ -36,7 +36,7 @@ function skybox(){
     pop();
 
     push();
-    translate(-1000, 0, -200);
+    translate(-1000, 0, 0);
     rotateY(PI/2);
     rotateZ(PI/2);
     texture(sky[4]);
@@ -44,28 +44,28 @@ function skybox(){
     pop();
 
     push();
-    translate(0, 1000, -200);
+    translate(0, 1000, 0);
     rotateX(PI/2);
     texture(sky[1]);
     plane(2000);
     pop();
 
     push();
-    translate(0, -1000, -200);
+    translate(0, -1000, 0);
     rotateX(PI/2);
     texture(sky[2]);
     plane(2000);
     pop();
 
     push();
-    translate(0, 0, -1200);
+    translate(0, 0, -1000);
     rotateZ(-PI/2);
     texture(sky[0]);
     plane(2000);
     pop();
 
     push();
-    translate(0, 0, 800);
+    translate(0, 0, 500);
     texture(sky[5]);
     plane(2000);
     pop();
@@ -76,20 +76,26 @@ function skybox(){
 }
 
 function keyPressed(){
-    if(key == '1'){
-        mode = 'first person';
-    }
-    else if (key == '2'){
-        mode = 'third person';
+    if(key == ' '){
+        if(mode == 'first person') mode = 'third person';
+        else mode = 'first person';
     }
 }
 
 function setUI(){
     title = createDiv('This Garden is Yours');
-    title.position(10, 10);
+    title.position(20, 20);
     title.style('font-size', '24px');
 
     desc = createDiv('Computer Graphics, 2020 Finals');
-    desc.position(10, 35);
+    desc.position(20, 45);
     desc.style('font-size', '15px');
+
+    name = createDiv('20161201 Yerin Choi');
+    name.position(20, 60);
+    name.style('font-size', '15px');
+
+    footer = createDiv('Press SPACEBAR to switch perspective (1st person, 3rd person)<br>W, A, S, D to move deer. As the deer moves, the flowers and trees are generated.<br>If you make some sound through mic, the forest will listen to you.')
+    footer.position(20, height+110);
+    footer.style('line-height', '15px');
 }
