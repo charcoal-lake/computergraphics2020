@@ -87,11 +87,10 @@ function draw(){
 
     if(!ambient.isPlaying()){
         ambient.loop();
-        ambient.setVolume(0.1);
     }
 
     if(!bg_music.isPlaying()){
-        bg_music.loop();
+       bg_music.loop();
     }
     if(flute_sound[0].isPlaying() || flute_sound[1].isPlaying() || flute_sound[2].isPlaying()){
         flute = true;

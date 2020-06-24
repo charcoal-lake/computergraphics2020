@@ -45,6 +45,7 @@ function moveDeer(option){
         stepGrid(deer_posx, deer_posy);
 
         if(!walk_sound.isPlaying()){
+            walk_sound.setVolume(0.15);
             walk_sound.loop();
         }
     }

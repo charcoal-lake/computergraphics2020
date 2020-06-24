@@ -83,7 +83,7 @@ function keyPressed(){
 }
 
 function setUI(){
-    title = createDiv('This Garden is Yours');
+    title = createDiv('This Forest is Yours');
     title.position(20, 20);
     title.style('font-size', '24px');
 
