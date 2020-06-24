@@ -74,6 +74,7 @@ function setup(){
     cam_dx = cam_dz = 0;
 
     setUI();
+    noCursor();
 }
 
 function draw(){
@@ -103,7 +104,7 @@ function draw(){
 
 
     noLights();
-    ambientLight(50);
+    ambientLight(60);
     directionalLight(235, 100, 50, 1, 0, 1);
     directionalLight(10, 100, 50, 0, 1, 1);
     spotLight(67, 29, 100, deer_posx, deer_posy, -500, 0, 0, 1, PI/3, 40);

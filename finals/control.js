@@ -76,7 +76,7 @@ function stepGrid(x, y){
         if(grid[posx][posy]==0){
             for(let j=0; j<3; j++)
                 grasses.push(new grass(posx, posy));
-            if(random(0, 10) > 6){
+            if(random(0, 10) > 4){
                 trees.push(new tree(posx, posy));
             }
             for(let j=0; j<2; j++){
