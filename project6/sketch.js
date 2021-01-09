@@ -29,9 +29,10 @@ function preload(){
 function setup(){
 
   // interface
-  cnv = createCanvas(windowHeight-100, windowHeight-100, WEBGL);
-  cnv.position(2*windowWidth/3-cnv.width/2, windowHeight/2-cnv.height/2);
+  cnv = createCanvas(windowWidth, windowHeight, WEBGL);
+  cnv.position(0, 0);
 
+  /*
   decs = createDiv('1. mouseX controls angle of spot light. <br> 2. mouseY controls concentration and diameter(how far<br>spot light is aparted from center) of the spotlight. <br> 3. You can scroll up or down to rotate the view. <br> 4. Press number key 1~5 to change music. <br> 5. Click the screen to play or pause the music.');
   decs.style('font-size', '13px');
   decs.style('font-family', 'Roboto Mono');
@@ -42,7 +43,7 @@ function setup(){
   title.style('font-weight', 'bold');
   title.style('font-family', 'Roboto Mono');
   title.position(100, 100);
-
+*/
   lights_dir = new p5.Vector(-1, 0, -1);
   def_color = color(255, 0, 0);
   lights_pos[0] = new p5.Vector(0, 0, 50);

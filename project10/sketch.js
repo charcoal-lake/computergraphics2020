@@ -22,7 +22,7 @@ function preload() {
 }
 
 function setup() {
-    cnv = createCanvas(windowWidth, windowHeight*2/3, WEBGL);
+    cnv = createCanvas(windowWidth, windowHeight, WEBGL);
     cnv.position(0, 0);
     noStroke();
     pg = createGraphics(1000, 1000, WEBGL);
@@ -31,7 +31,7 @@ function setup() {
 
     seed = random(0, 100);
     music_button = createButton('sound');
-    music_button.position(windowWidth-100, windowHeight*2/3+10);
+    music_button.position(windowWidth-100, windowHeight-30);
     music_button.mousePressed(function(){
         if(sound.isPlaying()) {
             sound.stop();
@@ -44,7 +44,7 @@ function setup() {
     fogs[0] = new fogLayer(0);
     fogs[1] = new fogLayer(300);
     fogs[2] = new fogLayer(800);
-
+/*
     title = createDiv('Blind Forest');
     title.position(110, windowHeight*2/3+50);
     title.style('font-family', 'Roboto Mono');
@@ -54,19 +54,19 @@ function setup() {
     desc = createDiv('Press \'sound\' button to play/stop the mysterious music. <br> Drag around the screen to look around the view. <br> Mouse position changes the position of the light behind the forest.');
     desc.position(400, windowHeight*2/3+50);
     desc.style('font-size', '13px');
-    desc.style('font-family', 'Roboto Mono');
+    desc.style('font-family', 'Roboto Mono');*/
 
 }
 
 function draw() {
     randomSeed(seed);
     background(150);
-
+   // orbitControl();
     directionalLight(255, 255, 255, 1, 0, 1);
     pointLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -100);
     spotLight(255, 255, 255, mouseX-width/2, mouseY-height/2, -10, 1, 0, 1);
 
-    camera(200+posx, 80+posy, (height/2.0) / tan(PI*30.0 / 180.0)+200, 0, 0, -200, 0, 1, 0);
+    camera(200+posx, 80+posy, (height/2.0) / tan(PI*30.0 / 180.0), 0, 0, -200, 0, 1, 0);
 
     pg.shader(myshader);
 
