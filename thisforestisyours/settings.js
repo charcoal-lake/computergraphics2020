@@ -86,7 +86,7 @@ function setUI() {
     title.position(20, 20);
     title.style('font-size', '24px');
 
-    desc = createDiv('');
+    desc = createDiv('---');
     desc.position(20, 45);
     desc.style('font-size', '15px');
 
